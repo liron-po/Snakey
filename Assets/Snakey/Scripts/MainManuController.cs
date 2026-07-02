@@ -41,7 +41,7 @@ public class MainMenuController : MonoBehaviour
 
         StringBuilder sb = new();
         
-        for (int i = 0; i < highScores.Count; i++)
+        for (int i = 0; ShouldShowScore(i, highScores.Count, highScores[i]); i++)
         {
             sb.AppendLine($"{i + 1}. {highScores[i].score} Pts ({highScores[i].date})");
         }
@@ -65,4 +65,7 @@ public class MainMenuController : MonoBehaviour
         Application.Quit();
         #endif
     }
+
+    private bool ShouldShowScore(int index, int count, ScoreEntry entry) => 
+        index < count && entry.score > 0;
 }
