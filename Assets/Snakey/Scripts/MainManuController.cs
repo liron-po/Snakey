@@ -15,24 +15,19 @@ public class MainMenuController : MonoBehaviour
 
     void Start()
     {
-        // ודא שהתפריט הראשי דולק והשאר כבוי
         ShowMainPanel();
     }
 
-    // נקרא לזה בלחיצה על Start Game
     public void PlayGame()
     {
-        // טעינה אסינכרונית של סצנת המשחק (נניח שקוראים לה Gameplay)
         SceneManager.LoadSceneAsync("Gameplay");
     }
 
-    // נקרא לזה בלחיצה על High Scores
     public void ShowHighScores()
     {
         mainPanel.SetActive(false);
         highScoresPanel.SetActive(true);
-
-        // טעינת הנתונים והצגתם בטקסט
+        
         List<ScoreEntry> highScores = SaveSystem.LoadHighScores();
         
         if (highScores.Count == 0)
@@ -56,10 +51,13 @@ public class MainMenuController : MonoBehaviour
         highScoresPanel.SetActive(false);
     }
 
-    // נקרא לזה בלחיצה על Quit (עובד רק בבנייה לנייד/מחשב, לא בתוך ה-Editor)
     public void QuitGame()
     {
         Debug.Log("Quitting game...");
         Application.Quit();
+
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
 }
