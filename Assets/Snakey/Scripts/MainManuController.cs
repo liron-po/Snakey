@@ -7,13 +7,16 @@ using TMPro;
 public class MainMenuController : MonoBehaviour
 {
     [Header("Panels")]
-    public GameObject mainPanel;
-    public GameObject highScoresPanel;
+    [SerializeField]
+    private GameObject mainPanel;
+    [SerializeField]
+    private GameObject highScoresPanel;
 
     [Header("UI Elements")]
-    public TextMeshProUGUI scoresText;
+    [SerializeField]
+    private TextMeshProUGUI scoresText;
 
-    void Start()
+    private void Start()
     {
         ShowMainPanel();
     }
@@ -27,16 +30,17 @@ public class MainMenuController : MonoBehaviour
     {
         mainPanel.SetActive(false);
         highScoresPanel.SetActive(true);
-        
+
         List<ScoreEntry> highScores = SaveSystem.LoadHighScores();
         
-        if (highScores.Count == 0)
+        if (highScores == null ||highScores.Count == 0)
         {
             scoresText.text = "No high scores yet!";
             return;
         }
 
-        StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new();
+        
         for (int i = 0; i < highScores.Count; i++)
         {
             sb.AppendLine($"{i + 1}. {highScores[i].score} Pts ({highScores[i].date})");
@@ -54,10 +58,11 @@ public class MainMenuController : MonoBehaviour
     public void QuitGame()
     {
         Debug.Log("Quitting game...");
-        Application.Quit();
 
         #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
         #endif
     }
 }
