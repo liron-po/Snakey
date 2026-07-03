@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Snakey/Scenes/MainManu.unity
+    path: Assets/Snakey/Scenes/MainMenu.unity
     guid: 378bf8bfffb62d648ab9cd6aff669776
   - enabled: 1
     path: Assets/Snakey/Scenes/GamePlay.unity

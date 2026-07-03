@@ -13,6 +13,6 @@ public class SnakeDeathHandler : MonoBehaviour
             SaveSystem.SaveScore(finalScore);
         }
 
-        SceneManager.LoadSceneAsync("MainMenu");
+        SceneManager.LoadSceneAsync("Mainmenu");
     }
 }
