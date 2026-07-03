@@ -1062,6 +1062,9 @@ GameObject:
   - component: {fileID: 1306985190}
   - component: {fileID: 1306985192}
   - component: {fileID: 1306985191}
+  - component: {fileID: 1306985195}
+  - component: {fileID: 1306985194}
+  - component: {fileID: 1306985193}
   m_Layer: 0
   m_Name: SnakeHead
   m_TagString: Untagged
@@ -1213,7 +1216,43 @@ MonoBehaviour:
   steerSpeed: 180
   bodySpacing: 1
   segmentPrefab: {fileID: 7767325327026446548, guid: 0ba1e7e217a6382488c72270b3bf812d, type: 3}
-  Segments: []
+--- !u!114 &1306985193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306985185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47ebfe5a8dd61064da9257de0bbb5462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSwipeDistance: 50
+--- !u!114 &1306985194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306985185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0e846c2dc97f544cab9d46b38f6fb1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1306985195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306985185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b9514b1d1dc94b4399cb4ec2094e103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1698943001
 GameObject:
   m_ObjectHideFlags: 0
