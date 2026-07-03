@@ -19,16 +19,47 @@ public class SnakeMovement : MonoBehaviour
     private bool _isStopped = false;
     private SnakeBody _snakeBody;
     private SnakeDeathHandler _deathHandler;
+    private IInputReader _inputReader;
 
     void Awake()
     {
         _snakeBody = GetComponent<SnakeBody>();
         _deathHandler = GetComponent<SnakeDeathHandler>();
+
+        #if UNITY_ANDROID || UNITY_IOS
+            _inputReader = GetComponentInChildren<MobileInputReader>();
+            if (_inputReader == null)
+            {
+                Debug.LogError("MobileInputReader missing from the scene!");
+            }
+        #else
+            _inputReader = GetComponentInChildren<SnakeInput>();
+            if (_inputReader == null)
+            {
+                Debug.LogError("SnakeInput missing from the scene!");
+            }
+        #endif
     }
 
     void Start()
     {
         _snakeBody?.Initialize(transform.position, _direction, segmentPrefab, bodySpacing, new List<Transform> { transform });
+    }
+
+    private void OnEnable()
+    {
+        if (_inputReader != null)
+        {
+            _inputReader.OnDirectionChanged += SetDirection;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_inputReader != null)
+        {
+            _inputReader.OnDirectionChanged -= SetDirection;
+        }
     }
 
     public void SetDirection(Vector3 newDirection)

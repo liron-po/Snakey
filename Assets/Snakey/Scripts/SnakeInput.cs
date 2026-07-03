@@ -1,14 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SnakeInput : MonoBehaviour
+public class SnakeInput : MonoBehaviour, IInputReader
 {
-    private SnakeMovement _movement;
-
-    void Start()
-    {
-        _movement = GetComponent<SnakeMovement>();
-    }
+    public event Action<Vector3> OnDirectionChanged;
 
     void Update()
     {
@@ -16,39 +12,24 @@ public class SnakeInput : MonoBehaviour
 
         if (Keyboard.current.upArrowKey.wasPressedThisFrame || Keyboard.current.wKey.wasPressedThisFrame)
         {
-            _movement.SetDirection(Vector3.forward);
+            OnDirectionChanged?.Invoke(Vector3.forward);
         }
         else if (Keyboard.current.downArrowKey.wasPressedThisFrame || Keyboard.current.sKey.wasPressedThisFrame)
         {
-            _movement.SetDirection(Vector3.back);
+            OnDirectionChanged?.Invoke(Vector3.back);
         }
         else if (Keyboard.current.leftArrowKey.wasPressedThisFrame || Keyboard.current.aKey.wasPressedThisFrame)
         {
-            _movement.SetDirection(Vector3.left);
+            OnDirectionChanged?.Invoke(Vector3.left);
         }
         else if (Keyboard.current.rightArrowKey.wasPressedThisFrame || Keyboard.current.dKey.wasPressedThisFrame)
         {
-            _movement.SetDirection(Vector3.right);
+            OnDirectionChanged?.Invoke(Vector3.right);
         }
     }
 
-    public void OnMoveUp()
-    {
-        _movement.SetDirection(Vector3.forward);
-    }
-
-    public void OnMoveDown()
-    {
-        _movement.SetDirection(Vector3.back);
-    }
-
-    public void OnMoveLeft()
-    {
-        _movement.SetDirection(Vector3.left);
-    }
-
-    public void OnMoveRight()
-    {
-        _movement.SetDirection(Vector3.right);
-    }
+    public void OnMoveUp() => OnDirectionChanged?.Invoke(Vector3.forward);
+    public void OnMoveDown() => OnDirectionChanged?.Invoke(Vector3.back);
+    public void OnMoveLeft() => OnDirectionChanged?.Invoke(Vector3.left);
+    public void OnMoveRight() => OnDirectionChanged?.Invoke(Vector3.right);
 }
