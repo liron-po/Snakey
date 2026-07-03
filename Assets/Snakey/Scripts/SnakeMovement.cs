@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SnakeBody))]
+[RequireComponent(typeof(SnakeDeathHandler))]
 public class SnakeMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
