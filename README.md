@@ -1,36 +1,66 @@
-# 🐍 Arcade Snake Game (Unity 6)
+# 🐍 Snakey
 
-A high-performance, architecture-first 2D/3D Arcade Snake game built using **Unity 6 (6.1+)**. Optimized for cross-platform mobile deployment (Android & iOS) utilizing clean code principles, decoupling patterns, and native OS scaling.
-
----
-
-## 🚀 Features & Architecture
-
-* **Unity 6 Architecture:** Built using the modern Unity 6 core standards, entirely bypassing deprecated legacy systems.
-* **Decoupled State Management:** Centralized `GameManager` using a strict protected Singleton pattern to handle application states, UI flows, and scene management.
-* **Waypoints Queue Movement:** Custom smooth-chain movement algorithm for the snake's tail utilizing a historic waypoint queue to prevent frame-rate rubber-banding and corner clipping.
-* **Asynchronous Loading:** Non-blocking scene transitions using `SceneManager.LoadSceneAsync` to ensure zero-freeze frame cycles on mobile devices.
-* **JSON-Based Persistence:** Top-10 leaderboard system serialized via a custom wrapper array into JSON and stored locally via `PlayerPrefs`.
+A Unity 6 snake game project with waypoint-based body movement, PlayerPrefs high scores, and menu-driven gameplay.
 
 ---
 
-## 🛠️ Tech Stack & Dependencies
+## 🚀 What’s in this repo
 
-* **Engine:** Unity 6 (6.1.x+)
-* **Language:** C# 10 / .NET 8 compatible
-* **Input System:** Modern **Unity Input System Package** (supporting touch, gestures, and desktop keyboards).
-* **Camera Pipeline:** **Cinemachine 3.x** utilizing decoupled world-space tracking.
-* **UI System:** UGUI / Canvas with dynamic **Safe Area Filtering** for modern mobile notches and device cutouts.
+* **Unity 6 project:** built with `ProjectVersion: 6000.1.7f1`.
+* **Snake gameplay:** head movement and tail follow using waypoint history.
+* **Input System support:** keyboard controls via Unity Input System and legacy keyboard polling.
+* **Score persistence:** high scores saved as JSON in `PlayerPrefs` and shown on the main menu.
+* **Main menu flow:** play, show high scores, return to menu, and quit game.
+* **Food spawning:** randomized safe spawning that avoids the snake body.
 
 ---
 
-## 📦 Getting Started & Installation
+## 🛠️ Tech stack
+
+* **Unity Engine:** Unity 6.0.1f1 project.
+* **Language:** C# 10 / .NET 8 compatible.
+* **Packages:**
+  * `com.unity.inputsystem` 1.14.0
+  * `com.unity.ugui` 2.0.0
+  * `com.unity.timeline` 1.8.7
+  * `com.unity.cinemachine` 3.1.7
+  * `com.unity.test-framework` 1.5.1
+  * `com.unity.visualscripting` 1.9.7
+* **UI:** TextMesh Pro + UGUI.
+
+---
+
+## 🧩 Core scripts
+
+* `Assets/Snakey/Scripts/GameManager.cs` — score tracking and UI updates.
+* `Assets/Snakey/Scripts/SnakeMovement.cs` — directional movement, growth, and collision handling.
+* `Assets/Snakey/Scripts/SnakeBody.cs` — waypoint-based tail following and segment growth.
+* `Assets/Snakey/Scripts/SnakeInput.cs` — keyboard input mapping and Input System callbacks.
+* `Assets/Snakey/Scripts/FoodSpawner.cs` — randomized food spawning.
+* `Assets/Snakey/Scripts/MainManuController.cs` — main menu, high score display, and scene loading.
+* `Assets/Snakey/Scripts/SaveSystem.cs` — save/load high score persistence.
+* `Assets/Snakey/Scripts/SnakeDeathHandler.cs` — game over handling and scene return.
+
+---
+
+## 🚀 Getting started
 
 ### Prerequisites
 * Unity Hub installed.
-* **Unity 6 LTS (or version 6.1+)** with Android/iOS Build Support modules enabled.
+* Unity 6.0.1f1 or later.
 
-### Setup Instructions
-1. Clone the repository to your local machine:
-   ```bash
-   git clone [https://github.com/your-username/snake-unity6.git](https://github.com/your-username/snake-unity6.git)
+### Open the project
+1. Open Unity Hub.
+2. Add the `Snakey` folder as a project.
+3. Open the project in Unity.
+
+### Run
+* Open the main menu scene and press Play in the editor.
+
+---
+
+## 📁 Notes
+
+* This project currently uses a simple snake movement mechanic on a 3D plane.
+* High scores are stored locally via `PlayerPrefs` under the key `SnakeHighScores_V2`.
+* The repo includes TextMesh Pro assets and sample scripts.
