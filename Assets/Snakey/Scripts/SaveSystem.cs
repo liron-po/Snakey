@@ -2,23 +2,28 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// מחלקות עזר פשוטות שיוניטי מסוגלת להפוך ל-JSON (חובה Serializable)
 [Serializable]
-public class ScoreEntry
+public struct ScoreEntry
 {
     public int score;
-    public string date;
+    public long timestamp;
+
+    public ScoreEntry(int score)
+    {
+        this.score = score;
+        this.timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+    }
 }
 
 [Serializable]
 public class HighScoreData
 {
-    public List<ScoreEntry> scores = new List<ScoreEntry>();
+    public List<ScoreEntry> scores = new();
 }
 
 public static class SaveSystem
 {
-    private static readonly string PlayerPrefsKey = "SnakeHighScores";
+    private static readonly string PlayerPrefsKey = "SnakeHighScores_V2";
 
     public static List<ScoreEntry> LoadHighScores()
     {
@@ -28,30 +33,38 @@ public static class SaveSystem
         }
 
         string json = PlayerPrefs.GetString(PlayerPrefsKey);
-        HighScoreData data = JsonUtility.FromJson<HighScoreData>(json);
-        return data.scores;
+        
+        if (string.IsNullOrEmpty(json) || json == "{}") return new List<ScoreEntry>();
+
+        try
+        {
+            HighScoreData data = JsonUtility.FromJson<HighScoreData>(json);
+            return (data != null && data.scores != null) ? data.scores : new List<ScoreEntry>();
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"[SaveSystem] Failed to parse JSON: {ex.Message}");
+            return new List<ScoreEntry>();
+        }
     }
 
     public static void SaveScore(int newScore)
     {
         List<ScoreEntry> currentScores = LoadHighScores();
 
-        ScoreEntry newEntry = new()
-        {
-            score = newScore,
-            date = DateTime.Now.ToString("dd/MM/yyyy")
-        };
+        ScoreEntry newEntry = new(newScore);
 
         currentScores.Add(newEntry);
-
         currentScores.Sort((x, y) => y.score.CompareTo(x.score));
 
         if (currentScores.Count > 10)
         {
             currentScores.RemoveRange(10, currentScores.Count - 10);
         }
-        HighScoreData data = new () { scores = currentScores };
+
+        HighScoreData data = new() { scores = currentScores };
         string json = JsonUtility.ToJson(data);
+        
         PlayerPrefs.SetString(PlayerPrefsKey, json);
         PlayerPrefs.Save();
     }

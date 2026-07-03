@@ -3,6 +3,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
 public class MainMenuController : MonoBehaviour
 {
@@ -33,20 +34,26 @@ public class MainMenuController : MonoBehaviour
 
         List<ScoreEntry> highScores = SaveSystem.LoadHighScores();
         
-        if (highScores == null ||highScores.Count == 0)
+        if (highScores == null || highScores.Count == 0)
         {
             scoresText.text = "No high scores yet!";
             return;
         }
 
         StringBuilder sb = new();
-        
-        for (int i = 0; ShouldShowScore(i, highScores.Count, highScores[i]); i++)
+
+        for (int i = 0; i < highScores.Count; i++)
         {
-            sb.AppendLine($"{i + 1}. {highScores[i].score} Pts ({highScores[i].date})");
+            if (highScores[i].score <= 0) 
+            {
+                continue;
+            }
+
+            var localDate = DateTimeOffset.FromUnixTimeSeconds(highScores[i].timestamp).LocalDateTime;
+            sb.AppendLine($"{i + 1}. {highScores[i].score} Pts ({localDate:yyyy-MM-dd HH:mm:ss})");
         }
 
-        scoresText.text = sb.ToString();
+        scoresText.text = sb.Length > 0 ? sb.ToString() : "No high scores yet!";
     }
 
     public void ShowMainPanel()
@@ -65,7 +72,4 @@ public class MainMenuController : MonoBehaviour
         Application.Quit();
         #endif
     }
-
-    private bool ShouldShowScore(int index, int count, ScoreEntry entry) => 
-        index < count && entry.score > 0;
 }
